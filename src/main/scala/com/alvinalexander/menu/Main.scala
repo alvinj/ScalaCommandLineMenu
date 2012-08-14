@@ -10,12 +10,10 @@ object Main extends App {
 
 class MainMenuController extends MenuController {
   def getMenu = {
-    val stocks = new ShowMenuMenuItem("Stocks", stocksMenuController)
-    val agg = new ShowMenuMenuItem("Aggregate", aggregateMenuController)
+    val stocks = new ShowMenuMenuItem("Stocks", new StocksMenuController)
+    val agg = new ShowMenuMenuItem("Aggregate", new AggregateMenuController)
     new Menu("Main Menu", Array(stocks, agg))
   }
-  val stocksMenuController = new StocksMenuController
-  val aggregateMenuController = new AggregateMenuController
 }
 
 class StocksMenuController extends MenuController {

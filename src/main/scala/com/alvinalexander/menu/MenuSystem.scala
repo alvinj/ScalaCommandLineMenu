@@ -27,7 +27,7 @@ class ShowMenuMenuItem(val text: String, val menuController: MenuController) ext
 class Menu (val title: String, var menuItems: Array[MenuItem])
 
 /**
- * Simple interface for a controller. 
+ * Simple interface for a menu controller. 
  */
 trait MenuController {
   def getMenu:Menu
