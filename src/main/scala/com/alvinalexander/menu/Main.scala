@@ -3,16 +3,16 @@ package com.alvinalexander.menu
 object Main extends App {
 
   val mainMenuCtrl = new MainMenuController
-  val menuRunner = new MenuRunner
+  val menuRunner = new MenuRunner("\n", "")
   menuRunner.displayMenu(mainMenuCtrl)
   
 }
 
 class MainMenuController extends MenuController {
   def getMenu = {
-    val stocks = MenuItem("Stocks").setController(stocksMenuController)
-    val agg = MenuItem("Aggregate").setController(aggregateMenuController)
-    new Menu(Array(stocks, agg))
+    val stocks = new ShowMenuMenuItem("Stocks", stocksMenuController)
+    val agg = new ShowMenuMenuItem("Aggregate", aggregateMenuController)
+    new Menu("Main Menu", Array(stocks, agg))
   }
   val stocksMenuController = new StocksMenuController
   val aggregateMenuController = new AggregateMenuController
@@ -20,23 +20,48 @@ class MainMenuController extends MenuController {
 
 class StocksMenuController extends MenuController {
   def getMenu = {
-    val list = MenuItem("List").setCallbackFunction(listStocks)
-    val add = MenuItem("Add").setCallbackFunction(addStock)
-    val delete = MenuItem("Delete").setCallbackFunction(deleteStock)
-    new Menu(Array(list, add, delete))
+    val list = new ExecuteFunctionMenuItem("List", listStocks)
+    val add = new ExecuteFunctionMenuItem("Add", addStock)
+    val delete = new ExecuteFunctionMenuItem("Delete", deleteStock)
+    val foo = new ShowMenuMenuItem("Foo Menu", new FooController)
+    new Menu("Stocks Menu", Array(list, add, delete, foo))
   }
-  def doNothing() {}
-  def listStocks() {}
-  def addStock() {}
-  def deleteStock() {}
+  def doNothing() { println("Doing nothing ...") }
+  def listStocks() { println("Here are your stocks ...") }
+  def addStock() { println("Add a stock ...") }
+  def deleteStock() { println("Delete a stock ...") }
+}
+
+class FooController extends MenuController {
+  def getMenu = {
+    val list = new ExecuteFunctionMenuItem("Foo", doNothing)
+    val add = new ExecuteFunctionMenuItem("Bar", doNothing)
+    val delete = new ExecuteFunctionMenuItem("Baz", doNothing)
+    new Menu("Foo Menu", Array(list, add, delete))
+  }
+  def doNothing() { println("Doing nothing ...") }
 }
 
 class AggregateMenuController extends MenuController {
   def getMenu = {
-    val showPrices = MenuItem("Show Prices").setCallbackFunction(doNothing)
-    val showNewsHeadlines = MenuItem("Show News Headlines").setCallbackFunction(doNothing)
-    new Menu(Array(showPrices, showNewsHeadlines))
+    val showPrices = new ExecuteFunctionMenuItem("Show Prices", doNothing)
+    val showNewsHeadlines = new ExecuteFunctionMenuItem("Show News Headlines", doNothing)
+    new Menu("Agg Menu", Array(showPrices, showNewsHeadlines))
   }
-  def doNothing() {}
+  def doNothing() { println("Doing nothing ...") }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

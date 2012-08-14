@@ -1,56 +1,30 @@
 package com.alvinalexander.menu
 
-trait MenuItemInterface
-
-case object Return extends MenuItemInterface
-case object Exit extends MenuItemInterface
-case object Unknown extends MenuItemInterface
+// public abstract java.lang.String text();
+// public abstract void text_$eq(java.lang.String);
+trait MenuItem {
+  val text: String
+}
 
 /**
- * At least two types of MenuItem:
- * 
- *   MenuItem(text, functionToExecute)
- *   MenuItem(text, menuController)
- * 
+ * Execute a function when the menu item is selected.
  */
-case class MenuItem (val text: String) extends MenuItemInterface {
-
-  var callbackFunction:() => Unit = _
-  var menuController: MenuController = _
-
-  def executeCallback {
-    if (callbackFunction != null) {
-      callbackFunction 
-    } else {
-      // TODO log the callback was null
-    }
-  }
-  
-  def getControllerMenu = {
-    if (menuController != null) {
-      menuController.getMenu
-    } else {
-      // TODO fix this with Option/Some/None
-      null
-    }
-  }
-  
-  def setCallbackFunction(callback:() => Unit): this.type = {
-    callbackFunction = callback
-    this
-  }
-  
-  def setController(menuController: MenuController): this.type = {
-    this.menuController = menuController
-    this
-  } 
-  
+class ExecuteFunctionMenuItem(val text: String, val callback:() => Unit) extends MenuItem {
+  def executeCallback { callback() }
 }
+
+/**
+ * Use this when a menu item selection leads to another menu.
+ */
+class ShowMenuMenuItem(val text: String, val menuController: MenuController) extends MenuItem {
+  def getControllerMenu = menuController.getMenu
+}
+
 
 /**
  * A Menu is an ordered collection of MenuItems.
  */
-class Menu (var menuItems: Array[MenuItem])
+class Menu (val title: String, var menuItems: Array[MenuItem])
 
 /**
  * Simple interface for a controller. 
