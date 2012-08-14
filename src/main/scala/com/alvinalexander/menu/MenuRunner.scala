@@ -1,6 +1,21 @@
 package com.alvinalexander.menu
 import scala.collection.mutable.Stack
 
+/**
+ * Create an instance of this MenuRunner class to get things going, like this:
+ * 
+ * `val mainMenuCtrl = new MainMenuController`
+ * `val menuRunner = new MenuRunner("\n", "")`
+ * `menuRunner.displayMenu(mainMenuCtrl)`
+ *
+ * The optional prefix and suffix let you control whatever you would like printed right
+ * before and right after the menu title. Here's an example that prints an extra blank
+ * line before each menu title, and prints `===` before and after the title; note that
+ * you have to add spaces manually:
+ * 
+ * `val mainMenuCtrl = new MainMenuController("\n=== ", " ===")`
+ *
+ */
 class MenuRunner(val prefix:String = "", val suffix:String = "") {
 
   var menuController:MenuController = _
@@ -61,7 +76,9 @@ class MenuRunner(val prefix:String = "", val suffix:String = "") {
     return readLine("Choice: ")
   }
 
-  private def buildDisplayableMenu = {
+  // private[menu] makes this method available to other classes in this package,
+  // which i use for testing.
+  private[menu] def buildDisplayableMenu = {
     var sb = new StringBuilder
     sb.append("\n")
     sb.append(prefix + menu.title + suffix + "\n\n")

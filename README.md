@@ -9,7 +9,7 @@ WARNING: This code doesn't work right now; I'm just checking it in so I can work
 To-Do
 -----
 
-* Pretty much everything...
+* See TODO.txt
 
 Notes
 -----

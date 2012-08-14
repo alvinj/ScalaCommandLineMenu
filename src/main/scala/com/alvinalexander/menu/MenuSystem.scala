@@ -1,7 +1,5 @@
 package com.alvinalexander.menu
 
-// public abstract java.lang.String text();
-// public abstract void text_$eq(java.lang.String);
 trait MenuItem {
   val text: String
 }
@@ -19,7 +17,6 @@ class ExecuteFunctionMenuItem(val text: String, val callback:() => Unit) extends
 class ShowMenuMenuItem(val text: String, val menuController: MenuController) extends MenuItem {
   def getControllerMenu = menuController.getMenu
 }
-
 
 /**
  * A Menu is an ordered collection of MenuItems.
